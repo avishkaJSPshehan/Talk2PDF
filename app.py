@@ -13,3 +13,10 @@ with st.sidebar:
     ''')
     add_vertical_space(5)
     st.write('Made with ❤️ by [Developer](https://portfolio-avishka-shehan-5dwot0xnv-avishka-shehans-projects.vercel.app/)')
+
+def main():
+    st.write("Talk to PDF")
+
+
+if __name__ == '__main__':
+    main()
