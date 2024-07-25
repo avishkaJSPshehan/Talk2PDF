@@ -16,6 +16,7 @@ with st.sidebar:
 
 def main():
     st.write("Talk to PDF")
+    st.write("Ask any question in your PDF")
 
 
 if __name__ == '__main__':
