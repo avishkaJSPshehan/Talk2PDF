@@ -1,9 +1,12 @@
 import streamlit as st
+import pickle 
+import os
+from dotenv import load_dotenv
 from streamlit_extras.add_vertical_space import add_vertical_space
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings.openai import OpenAIEmbeddings
-
+from langchain.vectorstores import FAISS
 
 
 with st.sidebar:
@@ -19,12 +22,15 @@ with st.sidebar:
     add_vertical_space(5)
     st.write('Made with ❤️ by [Developer](https://portfolio-avishka-shehan-5dwot0xnv-avishka-shehans-projects.vercel.app/)')
 
+
+
 def main():
     st.write("Talk to PDF 💭")
-    
+    load_dotenv()
     
     #file uppload Box
-    pdf = st.file_uploader(" ", type='pdf')
+    pdf = 'TestSample.pdf'
+    pdf = st.file_uploader("", type='pdf')
 
     text = ""
     if pdf is not None:
@@ -41,6 +47,22 @@ def main():
     )
     chunks = text_splitter.split_text(text=text)
 
+
+    store_name = pdf.name[:-4]
+
+    if os.path.exists(f"{store_name}.pkl"):
+        with open(f"{store_name}.pkl", "rb") as f:
+            VectorStore = pickle.load(f)
+        st.write("Embeddings Loaded From the Disk")
+    else:
+        embeddings = OpenAIEmbeddings()
+        VectorStore = FAISS.from_texts(chunks,embedding=embeddings)
+        with open(f"{store_name}.pkl","wb") as f:
+            pickle.dump(VectorStore,f)
+        st.write("Embeddings Computation Completed")
+
+    query = st.text_input("Ask questions about your PDF:")
+    st.write(query)
     
 
 
