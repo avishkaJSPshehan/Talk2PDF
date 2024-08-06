@@ -2,6 +2,8 @@ import streamlit as st
 from streamlit_extras.add_vertical_space import add_vertical_space
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings.openai import OpenAIEmbeddings
+
 
 
 with st.sidebar:
@@ -22,7 +24,7 @@ def main():
     
     
     #file uppload Box
-    pdf = st.file_uploader("Upload your PDF", type='pdf')
+    pdf = st.file_uploader(" ", type='pdf')
 
     text = ""
     if pdf is not None:
@@ -39,7 +41,7 @@ def main():
     )
     chunks = text_splitter.split_text(text=text)
 
-    st.write(chunks)
+    
 
 
 
