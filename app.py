@@ -47,7 +47,7 @@ def main():
     )
     chunks = text_splitter.split_text(text=text)
 
-
+    #get pdf file name
     store_name = pdf.name[:-4]
 
     if os.path.exists(f"{store_name}.pkl"):
