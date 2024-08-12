@@ -50,6 +50,7 @@ def main():
     #get pdf file name
     store_name = pdf.name[:-4]
 
+    #add exsisting embediings
     if os.path.exists(f"{store_name}.pkl"):
         with open(f"{store_name}.pkl", "rb") as f:
             VectorStore = pickle.load(f)
