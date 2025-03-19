@@ -1,4 +1,6 @@
 import streamlit as st
+import pickle
+from dotenv import load_dotenv
 from PyPDF2 import PdfReader
 from streamlit_extras.add_vertical_space import add_vertical_space
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -22,6 +24,9 @@ with st.sidebar:
 
 def main():
     st.write("Chat with PDF 💭")
+
+    #load env variables for the project
+    load_dotenv()
 
     # upload a PDF file
     pdf = st.file_uploader("Upload your PDF", type='pdf')
@@ -47,7 +52,9 @@ def main():
         embeddings = OpenAIEmbeddings()
 
         VectorStore = FAISS.from_texts(chunks,embedding=embeddings)
-        
+        store_name = pdf.name[:-4]
+        with open(f"{store_name}.pkl","wb") as f:
+            pickle.dump(VectorStore,f)
 
 
 
